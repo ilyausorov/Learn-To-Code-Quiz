@@ -1,0 +1,72 @@
+<section class="toppart" id="#top">
+	<div class="container">
+		<div class="row">
+		  <h1 >
+			Are you thinking about learning to code?
+		  </h1>
+		</div>
+	  <div class="text-center">
+		  <h3>Jesus!?! Why? <br>Jk. You rock!</h3>
+		  <h3>Okay, let's take this quiz to find out where you should learn to code... or if you should learn to at all.</h3>
+	  </div>
+	<div class="firstquestion">
+		<h4>Let's start?</h4>
+		<br>
+		<button class="btn btn-primary" ng-click="vm.loadquestions()">Start</button>
+	</div>		
+  </div>
+</section>
+<section class="coolthing" id="coolthing">
+</section>
+
+<div class="questions form-group text-center container" ng-if="vm.survey_started" id="anchorQuestions">
+		<hr style="border-color: transparent;">
+		<div class="col-xs-12" ng-repeat="item in vm.questions | filter:{order: vm.current_question}">
+		   <h2 class="innerquestion">Question #{{item.order}}: {{ item.question }}</h2>
+			<div ng-repeat="item in item.choice" class="col-xs-12 secondlayer">
+				<div class="btn btn-default" ng-click="vm.chooseAnswer(vm.current_question, item.value, item.num)">
+					{{ item.value }}
+				</div>
+			</div>
+			<div class="questionimage col-xs-12">
+				<img ng-src="/public/images/icons/question_icon_{{vm.current_question}}.svg">
+			</div>
+		</div>
+	</div>	
+
+<div class="finished form-group text-center container" ng-if="!vm.survy_started && vm.survey_done" id="finished">
+	<div ng-if="vm.loading">
+	<h2 > Loading your results now... </h2>
+	<img src="public/images/loaders/loading.svg">
+	</div>
+	<div ng-if="!vm.loading">
+		<h1>You should {{vm.survey.result.main}}.</h1>
+		<h3>{{ vm.survey.result.desc }}</h3>	
+		<img ng-src="public/images/icons/result_{{vm.survey.result.main}}.svg">
+	<div ng-if="vm.survey.result.val == 4 && !vm.info_submitted" class="orange">
+		<h3>P.S. <a href="https://fullstackfounderfactory.com" target="_blank">Fullstack Founder Factory</a> is a mentored part-time course. If you'd like to learn more, enter your name and email and we'll reach out.</h3>
+		
+		<input class="form-control inputfield" ng-model="vm.survey.name" placeholder="Name">
+		<input class="form-control inputfield"  ng-model="vm.survey.email" placeholder="Email address">
+		
+		<a ng-if="!vm.info_submitted" class="btn btn-primary extramargin" ng-click="vm.save()">Submit</a>
+	</div>
+		
+		<div class="form-group"  ng-if="vm.survey.result.val != 4 || vm.info_submitted">
+			
+			<h3 ng-if="vm.survey.result.val == 4">Info submitted. We'll reach out soon. Thanks!</h3>
+			
+			<a class="btn btn-primary" ng-click="vm.loadquestions()">Try again</a>
+
+			<a class="btn btn-primary" ng-click="vm.close()">Close</a>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row text-center">
+		<div class="fixed-bottom">
+			Made with 💜 &#8291; and 😏 &#8291; by the <a href="https://fullstackfounderfactory.com">Fullstack Founder Factory</a> team.
+		</div>
+	</div>
+</div>
